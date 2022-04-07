@@ -1,5 +1,5 @@
 # ZoteroIF Plugin for Zotero
-欢迎B站、知乎和公众号关注ShareStuff！该插件更新影响因子！
+欢迎B站、知乎和公众号关注ShareStuff！该插件更新影响因子等信息！
 
 利用自定义的本地csv文件进行影响因子等信息进行更新。
 
