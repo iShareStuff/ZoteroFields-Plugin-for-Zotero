@@ -3,6 +3,9 @@
 # ZoteroIF Plugin for Zotero
 欢迎B站、知乎和公众号关注ShareStuff！该插件更新影响因子等信息！
 
+![全平台](https://user-images.githubusercontent.com/61663626/163555125-986cc4ec-ac85-4811-a3d6-05cc47096807.jpg)
+
+
 利用自定义的本地csv文件进行影响因子等信息进行更新。
 
 csv文件中：
