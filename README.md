@@ -19,7 +19,9 @@ csv文件中：
 ![image](https://user-images.githubusercontent.com/61663626/163552631-745843a7-56b1-4fef-86e4-fc620119ebc3.png)
 
 * 单选或者多选【全选也可以】
+
 ![image](https://user-images.githubusercontent.com/61663626/163552809-56404e83-51f0-411e-9e47-152bdd566818.png)
 
 * 组内全更新
+
 ![image](https://user-images.githubusercontent.com/61663626/163552858-e218ae41-0f8e-494f-8624-5ceb2061aaa1.png)
