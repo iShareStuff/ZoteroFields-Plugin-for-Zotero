@@ -18,7 +18,7 @@ csv文件中：
 # 使用方法
 * 安装插件+下载csv文件【信息不准确的话，需要自己修改】
 
-[https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero/releases](https://github.com/iShareStuff/ZoteroFieldsF-Plugin-for-Zotero/releases)
+[https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero/releases](https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero/releases)
 
 ![image](https://user-images.githubusercontent.com/61663626/163552631-745843a7-56b1-4fef-86e4-fc620119ebc3.png)
 
