@@ -1,11 +1,11 @@
 
 # ZoteroIF Plugin for Zotero
-欢迎[B站](https://space.bilibili.com/20435673)、[知乎](https://www.zhihu.com/people/ShareStuff/posts)和公众号关注ShareStuff！该插件更新影响因子等信息！
+欢迎[B站](https://space.bilibili.com/20435673)、[知乎](https://www.zhihu.com/people/ShareStuff/posts)和公众号关注ShareStuff！
 
 ![全平台](https://user-images.githubusercontent.com/61663626/163555125-986cc4ec-ac85-4811-a3d6-05cc47096807.jpg)
 
 
-利用自定义的本地csv文件进行影响因子等信息进行更新。
+该插件利用自定义的本地csv文件进行影响因子等信息进行更新。
 
 csv文件中：
 
