@@ -14,6 +14,8 @@
 
 该插件利用自定义的本地csv文件进行影响因子等信息进行更新。
 
+[csv文件下载](https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero/releases/download/V1.1.0/default.csv)
+
 csv文件中：
 
 第一列为期刊名称【中英文均可】；
