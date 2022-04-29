@@ -4,7 +4,7 @@
  * @Author: ingopro
  * @Date: 2022-04-24 22:08:23
  * @LastEditors: isharestuff
- * @LastEditTime: 2022-04-29 18:48:09
+ * @LastEditTime: 2022-04-29 19:24:42
 -->
 # ZoteroFields-Plugin-for-Zotero
 欢迎[B站](https://space.bilibili.com/20435673)、[知乎](https://www.zhihu.com/people/ShareStuff/posts)和公众号关注ShareStuff！
@@ -51,7 +51,7 @@ csv文件中：
 - Select `Install Add-on from file`.
 - Browse to where you downloaded the `.xpi` file and select it.
 - Restart Zotero, by clicking `restart now` in the extensions list where the
-  ZoteroTheme plugin is now listed.
+  ZoteroFields-Plugin  is now listed.
 
 ## Usage
 
