@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://__addonRef__/locale/overlay.dtd">
+
+<overlay id="__addonRef__-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:html="http://www.w3.org/1999/xhtml">
+    <prefwindow id="zotero-prefs">
+        <prefpane id="zotero-prefpane-__addonRef__" insertafter="zotero-prefpane-advanced" label="Zotero Fields" image="chrome://__addonRef__/skin/favicon.png" onpaneload="zoteroifinitPreferences();">
+            <preferences id="zotero-preferences-__addonRef__">
+                <preference id="pref-__addonRef__-automatic_updateif_sharestuff" name="extensions.zotero.zoteroifbysharestuff.automatic_pdf_download" type="bool" />
+                <preference id="pref-__addonRef__-zoteroifbysharestuff-url" name="extensions.zotero.zoteroifbysharestuff.zoteroifbysharestuff_url" type="string" />
+            </preferences>
+            <vbox flex="1">
+                <grid>
+                    <columns>
+                        <column />
+                        <column flex="1" />
+                    </columns>
+                    <rows>
+                        <row>
+                            <label value="Automatic Update ZoteroFields By local csv file" />
+                            <checkbox id="id-zoteroifbysharestuff-automatic_updateif_sharestuff" preference="pref-zoteroifbysharestuff-automatic_updateif_sharestuff" />
+                        </row>
+                        <row>
+                            <label value="The csv file path for Updating ZoteroFields. Like D:/examples/a.csv, Do not forget *.csv" />
+                            <textbox id="id-zoteroifbysharestuff-zoteroifbysharestuff-url" preference="pref-zoteroifbysharestuff-zoteroifbysharestuff-url" />
+                        </row>
+                    </rows>
+                </grid>
+            </vbox>
+        </prefpane>
+    </prefwindow>
+
+    <!-- Include the main extension logic -->
+    <script src="chrome://__addonRef__/content/scripts/index.js" />
+</overlay>

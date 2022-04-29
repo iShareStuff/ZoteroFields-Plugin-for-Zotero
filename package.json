@@ -1,0 +1,33 @@
+{
+  "name": "ZoteroFields-Plugin-for-Zotero",
+  "addonName": "ZoteroFields-Plugin-for-Zotero",
+  "addonID": "ZoteroFields-Plugin-for-Zotero@iShareStuff.com",
+  "addonRef": "zoteroifbysharestuff",
+  "version": "1.1.0",
+  "description": "Update ZoteroFields",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node build.js",
+    "release": "release-it",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero.git"
+  },
+  "author": "iShareStuff",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero/issues"
+  },
+  "homepage": "https://github.com/iShareStuff/ZoteroFields-Plugin-for-Zotero#readme",
+  "dependencies": {
+    "compressing": "^1.5.1",
+    "crypto-js": "^4.1.1",
+    "esbuild": "^0.14.34",
+    "replace-in-file": "^6.3.2"
+  },
+  "devDependencies": {
+    "release-it": "^14.14.0"
+  }
+}

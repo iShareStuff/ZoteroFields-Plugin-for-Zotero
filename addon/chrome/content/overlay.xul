@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://__addonRef__/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://__addonRef__/locale/overlay.dtd">
+
+<overlay id="__addonRef__" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <script src="chrome://__addonRef__/content/scripts/index.js" />
+    <popup id="zotero-collectionmenu">
+        <menuseparator />
+        <menuitem id="zotero-collectionmenu-zoteroifbysharestuff" label="&zotero.zoteroifbysharestuff.updateCollection.label;" oncommand="Zotero.zoteroifbysharestuff.updateSelectedEntity()" class="menuitem-iconic zotero-zoteroifbysharestuff-icon" />
+    </popup>
+
+    <popup id="zotero-itemmenu" onpopupshowing="ZoteroPane.buildItemContextMenu();">
+        <menuseparator />
+        <menuitem id="zotero-itemmenu-zoteroifbysharestuff" label="&zotero.zoteroifbysharestuff.update.label;" oncommand="Zotero.zoteroifbysharestuff.updateSelectedItems()" class="menuitem-iconic zotero-zoteroifbysharestuff-icon" />
+    </popup>
+</overlay>
