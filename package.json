@@ -3,7 +3,7 @@
   "addonName": "ZoteroFields-Plugin-for-Zotero",
   "addonID": "ZoteroFields-Plugin-for-Zotero@iShareStuff.com",
   "addonRef": "zoteroifbysharestuff",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Update ZoteroFields",
   "main": "src/index.js",
   "scripts": {
