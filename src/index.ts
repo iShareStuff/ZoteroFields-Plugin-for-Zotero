@@ -200,19 +200,27 @@ Zotero.zoteroifbysharestuff = {
     var url = baseURL;
     return url;
   },
+  generateItemDOI: function (item) {
+    var baseURL = item.getField("DOI");
+    var url = baseURL;
+    return url;
+  },
   updateItem: async function (item, suppress_warningsif) {
     Zotero.debug("Suppress: " + suppress_warningsif);
-    var url = Zotero.zoteroifbysharestuff.generateItemUrl(item);
-    var url = url.toUpperCase().replace(/\./g, "");
-    var url = url.replace(/\s*/g, "");
+    var urlJ = Zotero.zoteroifbysharestuff.generateItemUrl(item);
+    var urlJ = urlJ.toUpperCase().replace(/\./g, "");
+    var urlJ = urlJ.replace(/\s*/g, "");
     var urlS = Zotero.zoteroifbysharestuff.generateItemSUrl(item);
     var urlS = urlS.toUpperCase().replace(/\./g, "");
     var urlS = urlS.replace(/\s*/g, "");
-    if (url != "" || urlS != "") {
+    var urlDOI = Zotero.zoteroifbysharestuff.generateItemDOI(item);
+    var urlDOI = urlDOI.replace("https://doi.org/", ""); //short doi
+    if (urlJ != "" || urlS != "") {
       //read csv
       var csvpath = Zotero.Prefs.get(
         "zoteroifbysharestuff.zoteroifbysharestuff_url"
       );
+
       //if (itemTypes=="thesis")
       if (urlS != "") {
         //对象变string JSON.stringify(dataj)
@@ -253,27 +261,17 @@ Zotero.zoteroifbysharestuff = {
           }
         }
         //write palce in series
-        var fieldName = "place";
-        var newValue = "";
-        var fieldID = Zotero.ItemFields.getID(fieldName);
-
-        let mappedFieldIDS = Zotero.ItemFields.getFieldIDFromTypeAndBase(
-          item.itemTypeID,
-          fieldName
-        );
         var IFS = dataS[urlS];
-        item.setField(mappedFieldIDS ? mappedFieldIDS : fieldID, newValue);
-
         if (IFS != undefined) {
           item.setField("place", IFS);
+          item.saveTx();
           alertInfo = "The item has update place with the value:  \n";
           Zotero.zoteroifbysharestuff.showPopUP(String(IFS), alertInfo);
           //alert("The item has update IF with the value:  "+IF)
-          await item.save();
         }
       }
       //if (itemTypes!="thesis") is journal
-      if (url != "") {
+      if (urlJ != "") {
         //期刊论文信息
         var Jjsonpath = csvpath.replace(".csv", "J.json");
         if (await OS.File.exists(Jjsonpath)) {
@@ -318,23 +316,13 @@ Zotero.zoteroifbysharestuff = {
 
         //计算
         //write if in series
-        var fieldName = "series";
-        var newValue = "";
-        var fieldID = Zotero.ItemFields.getID(fieldName);
-
-        let mappedFieldID = Zotero.ItemFields.getFieldIDFromTypeAndBase(
-          item.itemTypeID,
-          fieldName
-        );
-        var IF = dataJ[url];
-        item.setField(mappedFieldID ? mappedFieldID : fieldID, newValue);
-
+        var IF = dataJ[urlJ];
         if (IF != undefined) {
           item.setField("series", IF);
+          item.saveTx();
           alertInfo = "The item has update IF with the value:  \n";
           Zotero.zoteroifbysharestuff.showPopUP(String(IF), alertInfo);
           //alert("The item has update IF with the value:  "+IF)
-          await item.save();
         } else {
           alertInfo =
             "The journal name of this item do not find in the csv file\n";
@@ -350,6 +338,136 @@ Zotero.zoteroifbysharestuff = {
       //alert("The item do not have the journal name, you need to add it")
     }
     //Zotero.zoteroifbysharestuff.updateNextItem();
+    //===========================
+    //if items have doi, update
+    if (urlDOI != "") {
+      alertInfo = "The item has update Fields with DOI:  \n";
+      Zotero.zoteroifbysharestuff.showPopUP(String(urlDOI), alertInfo);
+      doiurl = encodeURIComponent(urlDOI);
+      let response = null;
+      //way 1
+      if (response === null) {
+        const style = "vnd.citationstyles.csl+json";
+        const xform = "transform/application/" + style;
+        var urldoi = "https://api.crossref.org/works/" + doiurl + "/" + xform;
+        response = await fetch(urldoi)
+          .then((response) => response.json())
+          .catch((err) => null);
+      }
+      //way 2
+      if (response === null) {
+        var urldoi = "https://doi.org/" + doiurl;
+        const style = "vnd.citationstyles.csl+json";
+        response = await fetch(urldoi, {
+          headers: {
+            Accept: "application/" + style,
+          },
+        })
+          .then((response) => response.json())
+          .catch((err) => null);
+      }
+      if (response === null) {
+        return -1;
+      } else {
+        for (let infoName in response) {
+          let datainfo = response[infoName];
+          if (infoName == "issue") {
+            item.setField("issue", datainfo);
+            item.saveTx();
+          } else if (infoName == "volume") {
+            item.setField("volume", datainfo);
+            item.saveTx();
+          } else if (infoName == "page") {
+            item.setField("pages", datainfo);
+            item.saveTx();
+          } else if (infoName == "published-print") {
+            item.setField("date", datainfo["date-parts"]);
+            item.saveTx();
+          } else if (infoName == "container-title") {
+            item.setField("publicationTitle", datainfo);
+            item.saveTx();
+          } else if (infoName == "container-title-short") {
+            item.setField("journalAbbreviation", datainfo);
+            item.saveTx();
+          } else if (infoName == "ISSN") {
+            item.setField("ISSN", datainfo[0]);
+            item.saveTx();
+          } else if (infoName == "language") {
+            item.setField("language", datainfo);
+            item.saveTx();
+          } else if (infoName == "link") {
+            item.setField("url", datainfo[0]["URL"]);
+            item.saveTx();
+          } else if (infoName == "title") {
+            item.setField("title", datainfo);
+            item.saveTx();
+          } else if (infoName == "author") {
+            var datatxt = [];
+            for (let numindex in datainfo) {
+              var name_affiliation = "";
+              var nameinfo = datainfo[numindex];
+              var aff_num = Object.keys(nameinfo["affiliation"]).length;
+              if (aff_num == 0) {
+                var name_affiliation = "";
+              } else {
+                for (let num_aff in nameinfo["affiliation"]) {
+                  var name_affiliation =
+                    name_affiliation +
+                    nameinfo["affiliation"][num_aff]["name"] +
+                    "\n";
+                }
+              }
+              var datatxt =
+                datatxt +
+                "\n姓名： " +
+                nameinfo["family"] +
+                "," +
+                nameinfo["given"] +
+                "\n" +
+                "\nORCID： " +
+                nameinfo["ORCID"] +
+                "\n" +
+                "\n单位： " +
+                name_affiliation +
+                "\n";
+            }
+            item.setField("libraryCatalog", datatxt);
+            item.saveTx();
+          } else if (infoName == "reference-count") {
+            var datatxt = [];
+            var datatxt = datatxt + "参考文献数量： " + datainfo + "\n";
+            item.setField("seriesText", datatxt);
+            item.saveTx();
+          } else if (infoName == "resource") {
+            var datatxt = [];
+            var datatxt =
+              datatxt + "\n文献网站： " + datainfo["primary"]["URL"] + "\n";
+            item.setField("accessDate", datatxt);
+            item.saveTx();
+          } else if (infoName == "funder") {
+            var datatxt = [];
+            for (let numindex in datainfo) {
+              var nameinfo = datainfo[numindex];
+              var datatxt =
+                datatxt +
+                "\n基金项目： " +
+                nameinfo["name"] +
+                "\n基金号： " +
+                nameinfo["award"] +
+                "\n";
+            }
+            item.setField("seriesTitle", datatxt);
+            item.saveTx();
+          }
+        }
+      }
+    } else {
+      alertInfo = "The item do not have DOI\n";
+      details = "you need to add it";
+      Zotero.zoteroifbysharestuff.showPopUP(details, alertInfo);
+      //alert("The item do not have the journal name, you need to add it")
+    }
+    //===========================
   },
 };
 
