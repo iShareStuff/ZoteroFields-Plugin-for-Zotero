@@ -369,6 +369,7 @@ Zotero.zoteroifbysharestuff = {
       if (response === null) {
         return -1;
       } else {
+        datatxt = [];
         for (let infoName in response) {
           let datainfo = response[infoName];
           if (infoName == "issue") {
@@ -402,7 +403,7 @@ Zotero.zoteroifbysharestuff = {
             item.setField("title", datainfo);
             item.saveTx();
           } else if (infoName == "author") {
-            var datatxt = [];
+            //var datatxt = [];
             for (let numindex in datainfo) {
               var name_affiliation = "";
               var nameinfo = datainfo[numindex];
@@ -431,21 +432,21 @@ Zotero.zoteroifbysharestuff = {
                 name_affiliation +
                 "\n";
             }
-            item.setField("libraryCatalog", datatxt);
-            item.saveTx();
+            //item.setField("libraryCatalog", datatxt);
+            //item.saveTx();
           } else if (infoName == "reference-count") {
-            var datatxt = [];
+            //var datatxt = [];
             var datatxt = datatxt + "参考文献数量： " + datainfo + "\n";
-            item.setField("seriesText", datatxt);
-            item.saveTx();
+            //item.setField("seriesText", datatxt);
+            //item.saveTx();
           } else if (infoName == "resource") {
-            var datatxt = [];
+            //var datatxt = [];
             var datatxt =
               datatxt + "\n文献网站： " + datainfo["primary"]["URL"] + "\n";
-            item.setField("accessDate", datatxt);
-            item.saveTx();
+            //item.setField("accessDate", datatxt);
+            //item.saveTx();
           } else if (infoName == "funder") {
-            var datatxt = [];
+            //var datatxt = [];
             for (let numindex in datainfo) {
               var nameinfo = datainfo[numindex];
               var datatxt =
@@ -456,9 +457,11 @@ Zotero.zoteroifbysharestuff = {
                 nameinfo["award"] +
                 "\n";
             }
-            item.setField("seriesTitle", datatxt);
-            item.saveTx();
+            //item.setField("seriesTitle", datatxt);
+            //item.saveTx();
           }
+          item.setField("seriesTitle", datatxt);
+          item.saveTx();
         }
       }
     } else {
